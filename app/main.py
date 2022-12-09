@@ -1,7 +1,6 @@
 from flask import Flask, request
-import numpy as np
-import cv2
-import base64
+import subprocess
+import shutil
 
 app = Flask(__name__)
 
@@ -10,9 +9,19 @@ def index():
     return "Server has started successfully.\n"
 
 """
-@app.route("/instant_ngp", methods=['POST'])
+@app.route("/nerf", methods=['POST'])
 def process():
-    files = request.files
+    images_dir_name = request.get_data()
+    subprocess.run(['python3', 'scripts/colmap2nerf.py',
+                    '--run_colmap',
+                    '--colmap_matcher exhaustive',
+                    f'--images {images_dir_name}/images',
+                    '--aabb_scale 1',
+                    f'--out {images_dir_name}/transforms.json'])
+
+    return images_path
+
+    cmd = []
     images = dict()
     for f in ['source', 'target']:
         _bytes = np.frombuffer(files[f].read(), np.uint8)
