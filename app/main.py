@@ -32,3 +32,6 @@ def process():
 
     return dst_base64
 """
+
+if __name__ == '__main__':
+    app.run()
