@@ -9,9 +9,9 @@ app = Flask(__name__)
 def index():
     return "Server has started successfully.\n"
 
+"""
 @app.route("/instant_ngp", methods=['POST'])
 def process():
-    """
     files = request.files
     images = dict()
     for f in ['source', 'target']:
@@ -20,6 +20,6 @@ def process():
     remapped = estimate_opticalflow(images['source'], images['target'])
     _, dst_data = cv2.imencode('.jpg', remapped)
     dst_base64 = base64.b64encode(dst_data).decode('utf-8')
-    """
 
     return dst_base64
+"""

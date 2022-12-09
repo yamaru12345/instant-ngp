@@ -90,3 +90,10 @@ RUN echo "Installing COLMAP ver. ${COLMAP_VERSION}..." \
 	&& make -j \
 	&& make install \
 	&& colmap -h
+
+RUN git clone https://github.com/yamaru12345/instant-ngp.git \
+	&& pip install flask uwsgi
+
+WORKDIR instant-ngp
+
+CMD ["uwsgi", "--ini", "uwsgi.ini"]
