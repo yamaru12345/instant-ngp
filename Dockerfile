@@ -66,6 +66,7 @@ RUN echo "Installing pip packages..." \
 	&& python3 -m pip install -U pip \
 	&& pip3 --no-cache-dir install -r ./requirements.txt \
 	&& pip3 --no-cache-dir install cmake==${CMAKE_VERSION} opencv-python==${OPENCV_VERSION} \
+	&& pip3 --no-cache-dir install flask uwsgi \
 	&& rm ./requirements.txt
 
 RUN echo "Installing Ceres Solver ver. ${CERES_SOLVER_VERSION}..." \
@@ -91,8 +92,7 @@ RUN echo "Installing COLMAP ver. ${COLMAP_VERSION}..." \
 	&& make install \
 	&& colmap -h
 
-RUN git clone https://github.com/yamaru12345/instant-ngp.git \
-	&& pip install flask uwsgi
+RUN git clone https://github.com/yamaru12345/instant-ngp.git
 
 WORKDIR instant-ngp
 
