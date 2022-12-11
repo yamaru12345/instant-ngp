@@ -17,9 +17,9 @@ def process():
     subprocess.run(['python3', 'scripts/colmap2nerf.py',
                     '--run_colmap',
                     '--colmap_matcher', 'exhaustive',
-                    '--images', images_dir,
+                    '--images', f'{images_dir}',
                     '--aabb_scale', '1',
-                    '--out', output_path])
+                    '--out', f'{output_path}'])
 
     return images_dir_name
 
