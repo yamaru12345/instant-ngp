@@ -14,9 +14,9 @@ def process():
     subprocess.run(['python3', 'scripts/colmap2nerf.py',
                     '--run_colmap',
                     '--colmap_matcher', 'exhaustive',
-                    '--images', f'{images_dir_name}/images',
+                    '--images', images_dir_name'/images',
                     '--aabb_scale', '1',
-                    '--out', f'{images_dir_name}/transforms.json'])
+                    '--out', images_dir_name'/transforms.json'])
 
     return images_dir_name
 
