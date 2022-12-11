@@ -12,7 +12,7 @@ def index():
 @app.route("/nerf", methods=['POST'])
 def process():
     base_dir = request.get_data()
-    images_dir = os.path.join(str(base_dir), 'images')
+    images_dir = os.path.join(str(base_dir, 'utf-8'), 'images')
     output_path = os.path.join(images_dir, 'transforms.json')
     subprocess.run(['python3', 'scripts/colmap2nerf.py',
                     '--run_colmap',
