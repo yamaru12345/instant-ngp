@@ -12,6 +12,7 @@ def index():
 @app.route("/nerf", methods=['POST'])
 def process():
     base_dir = request.get_data()
+    print(base_dir)
     images_dir = os.path.join(base_dir, 'images')
     output_path = os.path.join(images_dir, 'transforms.json')
     print(images_dir, output_path)
