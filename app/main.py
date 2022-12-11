@@ -8,19 +8,19 @@ app = Flask(__name__)
 def index():
     return "Server has started successfully.\n"
 
-"""
 @app.route("/nerf", methods=['POST'])
 def process():
     images_dir_name = request.get_data()
-    subprocess.run(['python3', 'scripts/colmap2nerf.py',
-                    '--run_colmap',
-                    '--colmap_matcher exhaustive',
-                    f'--images {images_dir_name}/images',
-                    '--aabb_scale 1',
-                    f'--out {images_dir_name}/transforms.json'])
+    #subprocess.run(['python3', 'scripts/colmap2nerf.py',
+    #                '--run_colmap',
+    #                '--colmap_matcher exhaustive',
+    #                f'--images {images_dir_name}/images',
+    #                '--aabb_scale 1',
+    #                f'--out {images_dir_name}/transforms.json'])
 
     return images_path
 
+"""
     cmd = []
     images = dict()
     for f in ['source', 'target']:
