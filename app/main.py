@@ -13,30 +13,32 @@ def index():
 def process():
     base_dir = request.get_data()
     images_dir = os.path.join('/home/data/', str(base_dir, 'utf-8'), 'images')
-    print(images_dir)
-    print(os.path.exists(images_dir))
-    output_path = os.path.join(images_dir, 'transforms.json')
-    subprocess.run(['python3', 'scripts/colmap2nerf.py',
-                    '--run_colmap',
-                    '--colmap_matcher', 'exhaustive',
-                    '--images', images_dir,
-                    '--aabb_scale', '1',
-                    '--out', output_path])
+    output_json_path = os.path.join(images_dir, 'transforms.json')
+    print('processing colmap estimating...')
+    cp = subprocess.run(['python3', 'scripts/colmap2nerf.py',
+                         '--run_colmap',
+                         '--colmap_matcher', 'exhaustive',
+                         '--images', images_dir,
+                         '--aabb_scale', '1',
+                         '--out', output_json_path])
+    if cp.returncode != 0:
+        return f'ERROR: {cp.returncode}'
+    else:
+        shutil.copy(output_json_path, './transforms.json')
+        output_ply_path = os.path.join(images_dir, 'mesh.ply')
+        print('processing nerf training...')
+        cp = subprocess.run(['python3', 'scripts/run.py',
+                         '--mode nerf',
+                         '--scene', './',
+                         '--save_mesh', output_ply_path,
+                         '--marching_cubes_res', '256',
+                         '--out', output_path])
+        shutil.remove('./transforms.json')
+        if cp.returncode != 0:
+            return f'ERROR: {cp.returncode}'
+        else:
+            return 'Done.'
 
-    return output_path
-
-"""
-    cmd = []
-    images = dict()
-    for f in ['source', 'target']:
-        _bytes = np.frombuffer(files[f].read(), np.uint8)
-        images[f] = cv2.imdecode(_bytes, flags=cv2.IMREAD_COLOR)
-    remapped = estimate_opticalflow(images['source'], images['target'])
-    _, dst_data = cv2.imencode('.jpg', remapped)
-    dst_base64 = base64.b64encode(dst_data).decode('utf-8')
-
-    return dst_base64
-"""
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
