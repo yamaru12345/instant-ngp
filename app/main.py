@@ -21,7 +21,7 @@ def process():
                     '--aabb_scale', '1',
                     '--out', output_path])
 
-    return images_dir_name
+    return output_path
 
 """
     cmd = []
