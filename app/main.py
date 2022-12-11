@@ -1,6 +1,7 @@
 from flask import Flask, request
 import subprocess
 import shutil
+import os
 
 app = Flask(__name__)
 
@@ -10,13 +11,15 @@ def index():
 
 @app.route("/nerf", methods=['POST'])
 def process():
-    images_dir_name = request.get_data()
+    base_dir = request.get_data()
+    images_dir = os.path.join(base_dir, 'images')
+    output_path = os.path.join(images_dir, 'transforms.json')
     subprocess.run(['python3', 'scripts/colmap2nerf.py',
                     '--run_colmap',
                     '--colmap_matcher', 'exhaustive',
-                    '--images', images_dir_name + '/images',
+                    '--images', images_dir,
                     '--aabb_scale', '1',
-                    '--out', images_dir_name + '/transforms.json'])
+                    '--out', output_path])
 
     return images_dir_name
 
