@@ -18,7 +18,7 @@ def process():
     #                '--aabb_scale 1',
     #                f'--out {images_dir_name}/transforms.json'])
 
-    return images_path
+    return images_dir_name
 
 """
     cmd = []
