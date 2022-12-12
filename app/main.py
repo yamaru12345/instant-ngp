@@ -1,4 +1,4 @@
-from flask import Flask, request, flash
+from flask import Flask, request
 import subprocess
 import shutil
 import os
@@ -14,7 +14,7 @@ def process():
     base_dir = request.get_data()
     images_dir = os.path.join('/home/data/', str(base_dir, 'utf-8'), 'images')
     output_json_path = os.path.join(images_dir, 'transforms.json')
-    flash('processing colmap estimating...')
+    print('processing colmap estimating...')
     cp = subprocess.run(['python3', 'scripts/colmap2nerf.py',
                          '--run_colmap',
                          '--colmap_matcher', 'exhaustive',
@@ -22,12 +22,11 @@ def process():
                          '--aabb_scale', '1',
                          '--out', output_json_path])
     if cp.returncode != 0:
-        flash(f'ERROR: {cp.returncode}')
-        return 
+        return f'ERROR: {cp.returncode}'
     else:
         shutil.copy(output_json_path, './transforms.json')
         output_ply_path = os.path.join(images_dir, 'mesh.ply')
-        flash('processing nerf training...')
+        print('processing nerf training...')
         cp = subprocess.run(['python3', 'scripts/run.py',
                          '--mode nerf',
                          '--scene', './',
@@ -36,11 +35,9 @@ def process():
                          '--out', output_path])
         shutil.remove('./transforms.json')
         if cp.returncode != 0:
-            flash(f'ERROR: {cp.returncode}')
-            return 
+            return f'ERROR: {cp.returncode}'
         else:
-            flash('Done.')
-            return
+            return 'Done.'
 
 
 if __name__ == '__main__':
