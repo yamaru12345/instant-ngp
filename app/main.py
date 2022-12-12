@@ -2,7 +2,14 @@ from flask import Flask, request
 import subprocess
 import shutil
 import os
+import logging
 
+
+LOGFILE_NAME = "app_nerf.log"
+app.logger.setLevel(logging.DEBUG)
+log_handler = logging.FileHandler(LOGFILE_NAME)
+log_handler.setLevel(logging.DEBUG)
+app.logger.addHandler(log_handler)
 app = Flask(__name__)
 
 @app.route("/")
