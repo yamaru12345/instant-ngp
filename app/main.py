@@ -33,7 +33,7 @@ def process():
                          '--save_mesh', output_ply_path,
                          '--marching_cubes_res', '256',
                          '--out', output_ply_path])
-        shutil.remove('./transforms.json')
+        os.remove('./transforms.json')
         if cp.returncode != 0:
             return f'ERROR: {cp.returncode}'
         else:
