@@ -28,7 +28,7 @@ def process():
         output_ply_path = os.path.join(images_dir, 'mesh.ply')
         print('processing nerf training...')
         cp = subprocess.run(['python3', 'scripts/run.py',
-                         '--mode nerf',
+                         '--mode', 'nerf',
                          '--scene', './',
                          '--save_mesh', output_ply_path,
                          '--marching_cubes_res', '256',
