@@ -31,8 +31,7 @@ def process():
                          '--mode', 'nerf',
                          '--scene', './',
                          '--save_mesh', output_ply_path,
-                         '--marching_cubes_res', '256',
-                         '--out', output_ply_path])
+                         '--marching_cubes_res', '256'])
         os.remove('./transforms.json')
         if cp.returncode != 0:
             return f'ERROR: {cp.returncode}'
