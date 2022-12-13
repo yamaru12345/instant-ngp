@@ -29,8 +29,7 @@ def process():
                          '--aabb_scale', '1',
                          '--out', output_json_path])
     if cp.returncode != 0:
-        return
-        #return f'ERROR: {cp.returncode}\n'
+        return f'ERROR: {cp.returncode}\n'
     else:
         shutil.copy(output_json_path, './transforms.json')
         output_ply_path = os.path.join('/home/data/', str(base_dir, 'utf-8'), 'mesh.ply')
@@ -42,8 +41,7 @@ def process():
                          '--marching_cubes_res', '256'])
         os.remove('./transforms.json')
         if cp.returncode != 0:
-            return
-            #return f'ERROR: {cp.returncode}\n'
+            return f'ERROR: {cp.returncode}\n'
         else:
             return 'Done.\n'
 
