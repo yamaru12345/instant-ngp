@@ -26,7 +26,7 @@ def process():
                          '--run_colmap',
                          '--colmap_matcher', 'exhaustive',
                          '--images', images_dir,
-                         '--aabb_scale', '2',
+                         '--aabb_scale', '1',
                          '--out', output_json_path])
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
