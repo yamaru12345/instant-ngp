@@ -20,13 +20,13 @@ def index():
 def process():
     base_dir = request.get_data()
     images_dir = os.path.join('/home/data/', str(base_dir, 'utf-8'), 'images')
-    output_json_path = os.path.join(images_dir, 'transforms.json')
+    output_json_path = os.path.join('/home/data/', str(base_dir, 'utf-8'), 'transforms.json')
     print('processing colmap estimating...')
     cp = subprocess.run(['python3', 'scripts/colmap2nerf.py',
                          '--run_colmap',
                          '--colmap_matcher', 'exhaustive',
                          '--images', images_dir,
-                         '--aabb_scale', '2',
+                         '--aabb_scale', '1',
                          '--out', output_json_path])
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
