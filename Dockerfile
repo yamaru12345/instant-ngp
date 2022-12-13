@@ -96,6 +96,7 @@ RUN git clone --recursive https://github.com/yamaru12345/instant-ngp.git
 
 WORKDIR instant-ngp
 
+CMD ["git", "pull"]
 CMD ["cmake", ".", "-B", "build"]
 CMD ["cmake", "--build", "build", "--config", "RelWithDebInfo", "-j"]
 CMD ["uwsgi", "--ini", "uwsgi.ini"]

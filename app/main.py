@@ -26,13 +26,13 @@ def process():
                          '--run_colmap',
                          '--colmap_matcher', 'exhaustive',
                          '--images', images_dir,
-                         '--aabb_scale', '1',
+                         '--aabb_scale', '2',
                          '--out', output_json_path])
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
     else:
         shutil.copy(output_json_path, './transforms.json')
-        output_ply_path = os.path.join(images_dir, 'mesh.ply')
+        output_ply_path = os.path.join('/home/data/', str(base_dir, 'utf-8'), 'mesh.ply')
         print('processing nerf training...')
         cp = subprocess.run(['python3', 'scripts/run.py',
                          '--mode', 'nerf',
