@@ -21,29 +21,33 @@ def process():
     base_dir = request.get_data()
     images_dir = os.path.join('/home/data', str(base_dir, 'utf-8'), 'images')
     output_json_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'transforms.json')
+    
     print('processing colmap estimating...')
-    cp = subprocess.run(['python3', 'scripts/colmap2nerf.py',
-                         '--run_colmap',
-                         '--colmap_matcher', 'exhaustive',
-                         '--images', images_dir,
-                         '--aabb_scale', '1',
-                         '--out', output_json_path])
+    if os.path.exists(output_json_path):
+        pass
+    else:
+        cp = subprocess.run(['python3', 'scripts/colmap2nerf.py',
+                            '--run_colmap',
+                            '--colmap_matcher', 'exhaustive',
+                            '--images', images_dir,
+                            '--aabb_scale', '1',
+                            '--out', output_json_path])
+        if cp.returncode != 0:
+            return f'ERROR: {cp.returncode}\n'
+
+    print('processing nerf training...')
+    shutil.copy(output_json_path, './transforms.json')
+    output_ply_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'mesh.ply')
+    cp = subprocess.run(['python3', 'scripts/run.py',
+                        '--mode', 'nerf',
+                        '--scene', './',
+                        '--save_mesh', output_ply_path,
+                        '--marching_cubes_res', '256'])
+    os.remove('./transforms.json')
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
     else:
-        shutil.copy(output_json_path, './transforms.json')
-        output_ply_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'mesh.ply')
-        print('processing nerf training...')
-        cp = subprocess.run(['python3', 'scripts/run.py',
-                         '--mode', 'nerf',
-                         '--scene', './',
-                         '--save_mesh', output_ply_path,
-                         '--marching_cubes_res', '256'])
-        os.remove('./transforms.json')
-        if cp.returncode != 0:
-            return f'ERROR: {cp.returncode}\n'
-        else:
-            return 'Done.\n'
+        return 'Done.\n'
 
 
 if __name__ == '__main__':
