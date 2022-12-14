@@ -38,14 +38,16 @@ def process():
     print('processing nerf training...')
     shutil.copy(output_json_path, './transforms.json')
     output_ply_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'mesh.ply')
+    output_video_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'video.mp4')
     cp = subprocess.run(['python3', 'scripts/run.py',
                         '--mode', 'nerf',
                         '--scene', './',
                         #'--save_mesh', output_ply_path,
                         #'--marching_cubes_res', '1024'])
                         '--video_camera_path', '/home/data/trajectory.json',
-                        '--video_n_seconds', '90',
-                        '--width', '1280', '--height', '720'])
+                        '--video_n_seconds', '30',
+                        '--width', '1280', '--height', '720',
+                        '--video_output', output_video_path])
     os.remove('./transforms.json')
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
