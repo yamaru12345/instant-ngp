@@ -22,10 +22,10 @@ def process():
     images_dir = os.path.join('/home/data', str(base_dir, 'utf-8'), 'images')
     output_json_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'transforms.json')
     
-    print('processing colmap estimating...')
     if os.path.exists(output_json_path):
-        pass
+        print('skipped colmap estimating.')
     else:
+        print('processing colmap estimating...')
         cp = subprocess.run(['python3', 'scripts/colmap2nerf.py',
                             '--run_colmap',
                             '--colmap_matcher', 'exhaustive',
@@ -41,8 +41,11 @@ def process():
     cp = subprocess.run(['python3', 'scripts/run.py',
                         '--mode', 'nerf',
                         '--scene', './',
-                        '--save_mesh', output_ply_path,
-                        '--marching_cubes_res', '1024'])
+                        #'--save_mesh', output_ply_path,
+                        #'--marching_cubes_res', '1024'])
+                        '--video_camera_path', './trajectory.json',
+                        '--video_n_seconds', '90',
+                        '--width', '1280', '--height', '720'])
     os.remove('./transforms.json')
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
