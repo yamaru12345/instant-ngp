@@ -43,7 +43,7 @@ def process():
                         '--scene', './',
                         #'--save_mesh', output_ply_path,
                         #'--marching_cubes_res', '1024'])
-                        '--video_camera_path', './trajectory.json',
+                        '--video_camera_path', '/home/instant-ngp/trajectory.json',
                         '--video_n_seconds', '90',
                         '--width', '1280', '--height', '720'])
     os.remove('./transforms.json')
