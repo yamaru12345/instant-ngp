@@ -45,7 +45,7 @@ def process():
                         #'--save_mesh', output_ply_path,
                         #'--marching_cubes_res', '1024'])
                         '--video_camera_path', '/home/data/trajectory.json',
-                        '--video_n_seconds', '30',
+                        '--video_n_seconds', '1',
                         '--width', '1280', '--height', '720',
                         '--video_output', output_video_path])
     os.remove('./transforms.json')
