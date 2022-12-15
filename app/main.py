@@ -39,7 +39,7 @@ def process():
     shutil.copy(output_json_path, './transforms.json')
     output_ply_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'mesh.ply')
     video_camera_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'trajectory.json')
-    output_video_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'video.mp4')
+    output_video_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'video_sharpen05.mp4')
     cp = subprocess.run(['python3', 'scripts/run.py',
                         '--mode', 'nerf',
                         '--scene', './',
