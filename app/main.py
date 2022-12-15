@@ -19,8 +19,8 @@ def index():
 @app.route("/nerf", methods=['POST'])
 def process():
     base_dir = request.get_data()
-    images_dir = os.path.join('/home/data', str(base_dir, 'utf-8'), 'images')
-    output_json_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'transforms.json')
+    images_dir = os.path.join('/home/data/processed', str(base_dir, 'utf-8'), 'images')
+    output_json_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'transforms.json')
     
     if os.path.exists(output_json_path):
         print('skipped colmap estimating.')
@@ -37,14 +37,15 @@ def process():
 
     print('processing nerf training...')
     shutil.copy(output_json_path, './transforms.json')
-    output_ply_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'mesh.ply')
-    output_video_path = os.path.join('/home/data', str(base_dir, 'utf-8'), 'video.mp4')
+    output_ply_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'mesh.ply')
+    video_camera_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'trajectory.json')
+    output_video_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'video.mp4')
     cp = subprocess.run(['python3', 'scripts/run.py',
                         '--mode', 'nerf',
                         '--scene', './',
                         #'--save_mesh', output_ply_path,
                         #'--marching_cubes_res', '1024'])
-                        '--video_camera_path', '/home/data/trajectory.json',
+                        '--video_camera_path', video_trajectory_path,
                         '--video_n_seconds', '1',
                         '--width', '1280', '--height', '720',
                         '--video_output', output_video_path])
