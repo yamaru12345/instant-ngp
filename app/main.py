@@ -6,7 +6,7 @@ import logging
 
 
 app = Flask(__name__)
-LOGFILE_NAME = "app_nerf.log"
+LOGFILE_NAME = 'app_nerf.log'
 app.logger.setLevel(logging.DEBUG)
 log_handler = logging.FileHandler(LOGFILE_NAME)
 log_handler.setLevel(logging.DEBUG)
@@ -45,6 +45,7 @@ def process():
                         '--scene', './',
                         #'--save_mesh', output_ply_path,
                         #'--marching_cubes_res', '1024'])
+                        '--sharpen', '0.5',
                         '--video_camera_path', video_camera_path,
                         '--video_n_seconds', '1',
                         '--width', '1280', '--height', '720',
