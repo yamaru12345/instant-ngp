@@ -19,7 +19,7 @@ def index():
 @app.route("/nerf", methods=['POST'])
 def process():
     base_dir = request.get_data()
-    images_dir = os.path.join('/home/data/processed', str(base_dir, 'utf-8'), 'images')
+    images_dir = os.path.join('/home/data/processed', str(base_dir, 'utf-8'))
     output_json_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'transforms.json')
     
     if os.path.exists(output_json_path):
