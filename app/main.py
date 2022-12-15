@@ -45,7 +45,7 @@ def process():
                         '--scene', './',
                         #'--save_mesh', output_ply_path,
                         #'--marching_cubes_res', '1024'])
-                        '--video_camera_path', video_trajectory_path,
+                        '--video_camera_path', video_camera_path,
                         '--video_n_seconds', '1',
                         '--width', '1280', '--height', '720',
                         '--video_output', output_video_path])
