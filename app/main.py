@@ -51,7 +51,8 @@ def process():
                             '--video_camera_path', video_camera_path,
                             '--video_n_seconds', '1',
                             '--width', '1280', '--height', '720',
-                            '--video_output', output_video_path])
+                            '--video_output', output_video_path],
+                            capture_output=True, text=True)
         with open(log_path, 'w') as f:
             f.write(cp.stdout)
     os.remove('./transforms.json')
