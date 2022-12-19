@@ -39,17 +39,19 @@ def process():
     shutil.copy(output_json_path, './transforms.json')
     output_ply_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'mesh.ply')
     video_camera_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'trajectory.json')
-    output_video_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), 'video_sharpen05.mp4')
-    cp = subprocess.run(['python3', 'scripts/run.py',
-                        '--mode', 'nerf',
-                        '--scene', './',
-                        #'--save_mesh', output_ply_path,
-                        #'--marching_cubes_res', '1024'])
-                        '--sharpen', '0.5',
-                        '--video_camera_path', video_camera_path,
-                        '--video_n_seconds', '1',
-                        '--width', '1280', '--height', '720',
-                        '--video_output', output_video_path])
+    for i in [0.0, 0.25, 0.5, 0.75, 1.0]:
+        output_video_path = os.path.join('/home/data/output', str(base_dir, 'utf-8'), f'video_sharpen_{i}.mp4')
+        cp = subprocess.run(['python3', 'scripts/run.py',
+                            '--mode', 'nerf',
+                            '--scene', './',
+                            #'--save_mesh', output_ply_path,
+                            #'--marching_cubes_res', '1024'])
+                            '--sharpen', i,
+                            '--video_camera_path', video_camera_path,
+                            '--video_n_seconds', '1',
+                            '--width', '1280', '--height', '720',
+                            '--video_output', output_video_path],
+                            '>', f'result_sharpen_{i}.log')
     os.remove('./transforms.json')
     if cp.returncode != 0:
         return f'ERROR: {cp.returncode}\n'
